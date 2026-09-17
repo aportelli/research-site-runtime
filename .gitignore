@@ -1,0 +1,7 @@
+# Local Python and editor artefacts are never runtime inputs.
+.venv/
+__pycache__/
+.DS_Store
+
+# VSCode
+.vscode

@@ -1,0 +1,14 @@
+[project]
+name = "research-site-runtime"
+version = "0.1.0"
+requires-python = ">=3.13"
+# Used only when a target has no locked web environment of its own.
+dependencies = [
+    "mkdocs-jupyter>=0.26.3",
+    "mkdocs-material>=9.7.7",
+    # Also provides Bokeh, used by serve_apps.py for optional Panel routes.
+    "panel>=1.9.4",
+]
+
+[tool.uv]
+package = false
