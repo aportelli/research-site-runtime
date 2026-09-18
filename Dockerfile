@@ -18,7 +18,7 @@ RUN apt-get update \
 COPY --from=uv /uv /uvx /bin/
 COPY --from=git-sync /git-sync /usr/local/bin/git-sync
 COPY --from=fallback /opt/fallback /opt/fallback
-COPY entrypoint.sh refresh.sh nginx.conf prepare_apps.py serve_apps.py stamp_revision.py /runtime/
+COPY entrypoint.sh refresh.sh nginx.conf prepare_apps.py jobs.py run_jobs.py scheduler.py serve_apps.py stamp_revision.py /runtime/
 RUN chmod +x /runtime/entrypoint.sh /runtime/refresh.sh
 # Credentials and all content are supplied at deployment time.
 ENV GITSYNC_PERIOD=60s \

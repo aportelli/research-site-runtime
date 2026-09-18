@@ -7,6 +7,8 @@ import re
 import tomllib
 from pathlib import Path
 
+from jobs import load_jobs
+
 
 def prepare(content: Path, aliases: Path) -> None:
     """Reject incomplete targets before dependency installation or publication."""
@@ -21,6 +23,8 @@ def prepare(content: Path, aliases: Path) -> None:
         metadata = tomllib.loads(project.read_text())
         if "web" not in metadata.get("dependency-groups", {}):
             raise ValueError("locked targets must define dependency-groups.web")
+
+    load_jobs(content)
 
     manifest = content / "web/panel_apps.toml"
     apps = tomllib.loads(manifest.read_text()).get("apps") if manifest.is_file() else {}

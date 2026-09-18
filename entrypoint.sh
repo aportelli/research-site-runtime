@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Start only after the initial checkout has rendered successfully.
+# Start only after the initial checkout and every declared job have completed.
 set -Eeuo pipefail
 
 log() {
@@ -23,7 +23,7 @@ sync_args=(
 
 cleanup() {
 	local pid
-	for pid in "${nginx_pid:-}" "${sync_pid:-}"; do
+	for pid in "${nginx_pid:-}" "${sync_pid:-}" "${scheduler_pid:-}"; do
 		[[ "$pid" =~ ^[0-9]+$ ]] && kill "$pid" 2>/dev/null || true
 	done
 	if [[ -r /run/panel.pid ]]; then
@@ -46,6 +46,9 @@ nginx_pid=$!
 log "starting Git polling every ${GITSYNC_PERIOD:-60s}"
 git-sync "${sync_args[@]}" --exechook-command=/runtime/refresh.sh --exechook-timeout=10m &
 sync_pid=$!
+log "starting periodic target job scheduler"
+python /runtime/scheduler.py </dev/null >/proc/1/fd/1 2>/proc/1/fd/2 &
+scheduler_pid=$!
 # A failed web server or synchronizer should stop the container so Compose can
 # restart it rather than silently serving stale content indefinitely.
-wait -n "$nginx_pid" "$sync_pid"
+wait -n "$nginx_pid" "$sync_pid" "$scheduler_pid"
