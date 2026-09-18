@@ -22,7 +22,8 @@ COPY entrypoint.sh refresh.sh nginx.conf prepare_apps.py jobs.py run_jobs.py sch
 RUN chmod +x /runtime/entrypoint.sh /runtime/refresh.sh
 # Credentials and all content are supplied at deployment time.
 ENV GITSYNC_PERIOD=60s \
-    GIT_TERMINAL_PROMPT=0
+    GIT_TERMINAL_PROMPT=0 \
+    NO_MKDOCS_2_WARNING=1
 VOLUME ["/cache", "/content", "/site"]
 EXPOSE 8080
 ENTRYPOINT ["/runtime/entrypoint.sh"]

@@ -6,9 +6,37 @@ This image serves a research repository that is refreshed from Git.  It contains
 only the generic runtime; documentation, data, Python code and Panel apps stay
 in the target repository.
 
-## Run
+## Getting started
 
-Set the required variables, then run `docker compose up --build`.
+To run the included [template site](https://github.com/aportelli/research-site-template) immediately:
+
+```sh
+docker run --rm --init -p 8080:8080 \
+  -e GITSYNC_REPO=https://github.com/aportelli/research-site-template.git \
+  -e GITSYNC_REF=main \
+  ghcr.io/aportelli/research-site-runtime:latest
+```
+
+Or save this as `compose.yaml`, then run `docker compose up`:
+
+```yaml
+services:
+  site:
+    image: ghcr.io/aportelli/research-site-runtime:latest
+    init: true
+    ports:
+      - "8080:8080"
+    environment:
+      GITSYNC_REPO: https://github.com/aportelli/research-site-template.git
+      GITSYNC_REF: main
+```
+
+The site is available at `http://localhost:8080`.
+
+## Run your site
+
+Change the required variables in the Compose example, then run
+`docker compose up`.
 
 - `GITSYNC_REPO` (required): HTTPS URL of the target Git repository;
 - `GITSYNC_REF` (required): branch, tag, or commit to serve;
