@@ -6,7 +6,7 @@ This image serves a research repository that is refreshed from Git.
 
 ## Getting started
 
-To run the included [template site](https://github.com/aportelli/research-site-template) immediately:
+To run the demo [template site](https://github.com/aportelli/research-site-template) immediately:
 
 ```sh
 docker run --rm --init -p 8080:8080 \
