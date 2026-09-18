@@ -2,9 +2,7 @@
 
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](LICENSE)
 
-This image serves a research repository that is refreshed from Git.  It contains
-only the generic runtime; documentation, data, Python code and Panel apps stay
-in the target repository.
+This image serves a research repository that is refreshed from Git.
 
 ## Getting started
 
